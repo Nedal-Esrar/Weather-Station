@@ -35,7 +35,7 @@ public class WeatherStationService : IWeatherStationService
     }
   }
   
-  private async Task ProcessInput(string input)
+  public async Task ProcessInput(string input)
   {
     var inputParser = _inputFactories.GetFactoryFor(input)?.Create<WeatherData>();
 
