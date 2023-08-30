@@ -1,3 +1,4 @@
+using FluentAssertions;
 using WeatherStation.Data;
 using WeatherStation.WeatherBots;
 
@@ -36,7 +37,7 @@ public class SnowBotTests
 
     var expectedOutput = string.Empty;
     
-    Assert.Equal(expectedOutput, consoleOutputContent);
+    consoleOutputContent.Should().Be(expectedOutput);
   }
   
   [Theory]
@@ -58,6 +59,6 @@ public class SnowBotTests
 
                           """;
     
-    Assert.Equal(expectedOutput, consoleOutputContent);
+    consoleOutputContent.Should().Be(expectedOutput);
   }
 }

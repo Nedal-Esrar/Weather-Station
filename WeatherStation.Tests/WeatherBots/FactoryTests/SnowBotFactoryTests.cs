@@ -1,3 +1,4 @@
+using FluentAssertions;
 using WeatherStation.Configuration;
 using WeatherStation.Utilities.Exceptions;
 using WeatherStation.WeatherBots;
@@ -18,7 +19,7 @@ public class SnowBotFactoryTests
     
     Action act = () => _sut.Create(_botConfiguration);
 
-    Assert.Throws<TemperatureThresholdNotDefinedException>(act);
+    act.Should().Throw<TemperatureThresholdNotDefinedException>();
   }
 
   [Fact]
@@ -30,6 +31,6 @@ public class SnowBotFactoryTests
 
     var returnedBot = _sut.Create(_botConfiguration);
 
-    Assert.IsType<SnowBot>(returnedBot);
+    returnedBot.Should().BeOfType<SnowBot>();
   }
 }

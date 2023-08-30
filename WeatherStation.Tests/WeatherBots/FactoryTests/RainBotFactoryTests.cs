@@ -1,3 +1,4 @@
+using FluentAssertions;
 using WeatherStation.Configuration;
 using WeatherStation.Utilities.Exceptions;
 using WeatherStation.WeatherBots;
@@ -18,7 +19,7 @@ public class RainBotFactoryTests
 
     Action act = () => _sut.Create(_botConfiguration);
 
-    Assert.Throws<HumidityNotDefinedException>(act);
+    act.Should().Throw<HumidityNotDefinedException>();
   }
 
   [Fact]
@@ -30,6 +31,6 @@ public class RainBotFactoryTests
 
     var returnedBot = _sut.Create(_botConfiguration);
 
-    Assert.IsType<RainBot>(returnedBot);
+    returnedBot.Should().BeOfType<RainBot>();
   }
 }

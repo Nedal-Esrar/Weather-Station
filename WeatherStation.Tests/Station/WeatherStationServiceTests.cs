@@ -1,3 +1,4 @@
+using FluentAssertions;
 using WeatherStation.Data;
 using WeatherStation.Parsers.Factories;
 using WeatherStation.Parsers.FactoryProviders;
@@ -44,8 +45,8 @@ public class WeatherStationServiceTests
     var expectedOutput = "Invalid input.\n";
     
     var consoleOutputContent = _consoleOutput.ToString();
-    
-    Assert.Equal(expectedOutput, consoleOutputContent);
+
+    consoleOutputContent.Should().Be(expectedOutput);
   }
 
   [Theory]
@@ -57,8 +58,8 @@ public class WeatherStationServiceTests
     var expectedOutputPrefix = "An error has occurred while parsing input:";
     
     var consoleOutputContent = _consoleOutput.ToString();
-    
-    Assert.StartsWith(expectedOutputPrefix, consoleOutputContent);
+
+    consoleOutputContent.Should().StartWith(expectedOutputPrefix);
   }
 
   [Theory]
@@ -70,8 +71,8 @@ public class WeatherStationServiceTests
     var expectedOutput = "";
     
     var consoleOutputContent = _consoleOutput.ToString();
-    
-    Assert.Equal(expectedOutput, consoleOutputContent);
+
+    consoleOutputContent.Should().Be(expectedOutput);
   }
 
   [Theory]

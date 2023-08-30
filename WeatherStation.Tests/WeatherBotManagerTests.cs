@@ -1,3 +1,4 @@
+using FluentAssertions;
 using WeatherStation.BotManager;
 using WeatherStation.Configuration;
 using WeatherStation.Utilities.Exceptions;
@@ -47,7 +48,9 @@ public class WeatherBotManagerTests
       }}
     });
 
-    Assert.Throws<UnknownStateException>(() => _sut.GetBots());
+    Action act = () => _sut.GetBots();
+
+    act.Should().Throw<UnknownStateException>();
   }
 
   [Fact]
@@ -61,7 +64,9 @@ public class WeatherBotManagerTests
       }}
     });
 
-    Assert.Throws<ArgumentOutOfRangeException>(() => _sut.GetBots());
+    Action act = () => _sut.GetBots();
+
+    act.Should().Throw<ArgumentOutOfRangeException>();
   }
 
   [Fact]
@@ -91,6 +96,6 @@ public class WeatherBotManagerTests
 
     var returnedList = _sut.GetBots();
 
-    Assert.Equal(1, returnedList.Count);
+    returnedList.Should().HaveCount(1);
   }
 }

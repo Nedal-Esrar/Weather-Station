@@ -1,3 +1,4 @@
+using FluentAssertions;
 using WeatherStation.Data;
 using WeatherStation.WeatherBots;
 using Xunit.Abstractions;
@@ -38,7 +39,7 @@ public class RainBotTests
     
     var expectedOutput = string.Empty;
     
-    Assert.Equal(expectedOutput, consoleOutputContent);
+    consoleOutputContent.Should().Be(expectedOutput);
   }
   
   [Theory]
@@ -60,6 +61,6 @@ public class RainBotTests
 
                           """;
     
-    Assert.Equal(expectedOutput, consoleOutputContent);
+    consoleOutputContent.Should().Be(expectedOutput);
   }
 }
