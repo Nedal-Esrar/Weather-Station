@@ -1,7 +1,7 @@
 using System.Reflection;
 using Xunit.Sdk;
 
-namespace WeatherStation.Tests.Station.TestDataAttributes;
+namespace WeatherStation.Tests.TestDataAttributes;
 
 public class SupportedButInvalidTestDataAttribute : DataAttribute
 {

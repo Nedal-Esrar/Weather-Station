@@ -2,7 +2,7 @@ using WeatherStation.Data;
 using WeatherStation.Parsers.Factories;
 using WeatherStation.Parsers.FactoryProviders;
 using WeatherStation.Station;
-using WeatherStation.Tests.Station.TestDataAttributes;
+using WeatherStation.Tests.TestDataAttributes;
 
 namespace WeatherStation.Tests.Station;
 
@@ -62,7 +62,7 @@ public class WeatherStationServiceTests
   }
 
   [Theory]
-  [SupportedValidTestData]
+  [SupportedValidJsonTestData, SupportedValidXmlTestData]
   public async Task ProcessInput_SupportedValidData_ShouldNotDisplayErrorMessages(string input)
   {
     await _sut.ProcessInput(input);

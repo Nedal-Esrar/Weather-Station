@@ -1,14 +1,14 @@
 using System.Reflection;
 using Xunit.Sdk;
 
-namespace WeatherStation.Tests.Station.TestDataAttributes;
+namespace WeatherStation.Tests.TestDataAttributes;
 
-public class SupportedValidTestDataAttribute : DataAttribute
+public class SupportedValidJsonTestDataAttribute : DataAttribute
 {
   private readonly List<object[]> _data = new()
   {
     new object[]{"""{"Location": "City Name","Temperature": 23.0,"Humidity": 85.0}"""},
-    new object[]{"<WeatherData><Location>City Name</Location><Temperature>23.0</Temperature><Humidity>85.0</Humidity></WeatherData>"}
+    new object[]{"""{"LOCAtion": "Jenin", "TEMpEratUre": 35.5, "HumidIty": 60.0}"""}
   };
   
   public override IEnumerable<object[]> GetData(MethodInfo testMethod)
