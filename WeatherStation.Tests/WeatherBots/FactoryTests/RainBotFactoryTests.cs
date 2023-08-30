@@ -16,7 +16,9 @@ public class RainBotFactoryTests
   {
     _botConfiguration.HumidityThreshold = null;
 
-    Assert.Throws<HumidityNotDefinedException>(() => _sut.Create(_botConfiguration));
+    Action act = () => _sut.Create(_botConfiguration);
+
+    Assert.Throws<HumidityNotDefinedException>(act);
   }
 
   [Fact]

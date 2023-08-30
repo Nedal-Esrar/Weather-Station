@@ -15,8 +15,10 @@ public class SunBotFactoryTests
   public void Create_TemperatureThresholdIsNull_ShouldThrowException()
   {
     _botConfiguration.TemperatureThreshold = null;
+    
+    Action act = () => _sut.Create(_botConfiguration);
 
-    Assert.Throws<TemperatureThresholdNotDefinedException>(() => _sut.Create(_botConfiguration));
+    Assert.Throws<TemperatureThresholdNotDefinedException>(act);
   }
 
   [Fact]
