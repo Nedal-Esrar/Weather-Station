@@ -75,13 +75,24 @@ public class WeatherStationServiceTests
   }
 
   [Theory]
-  [ObservableSetterTestData]
-  public async Task ProcessInput_VariousData_SetterShouldBeInvokedBasedOnInput(string input,
-    bool shouldObservableSetterBeInvokedOnce)
+  [NotSupportedTestData]
+  [SupportedButInvalidTestData]
+  public async Task ProcessInput_IncompatibleData_SetterShouldNotBeInvoked(string input)
   {
     await _sut.ProcessInput(input);
     
-    _weatherDataObservableMock.VerifySet(observable => observable.WeatherData = It.IsAny<WeatherData>(),
-      shouldObservableSetterBeInvokedOnce ? Times.Once : Times.Never);
+    _weatherDataObservableMock.VerifySet(observable => observable.WeatherData = It.IsAny<WeatherData>(), 
+      Times.Never);
+  }
+  
+  [Theory]
+  [SupportedValidJsonTestData]
+  [SupportedValidXmlTestData]
+  public async Task ProcessInput_CompatibleData_SetterShouldBeInvokedOnce(string input)
+  {
+    await _sut.ProcessInput(input);
+    
+    _weatherDataObservableMock.VerifySet(observable => observable.WeatherData = It.IsAny<WeatherData>(), 
+      Times.Once);
   }
 }
