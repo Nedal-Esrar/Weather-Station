@@ -7,37 +7,58 @@ namespace WeatherStation.Tests.WeatherBots.BotTests;
 
 public class RainBotTests
 {
-  [Theory]
-  [InlineData(16.6, 20.0, true)]
-  [InlineData(15.5, 1.6, false)]
-  [InlineData(17.5, null, false)]
-  public void Activate_CustomData_ShouldOutputToTheConsole(double humidityThreshold, double? newHumidity,
-    bool shouldOutputToConsole)
+  private readonly string _botMessage;
+  
+  private readonly StringWriter _consoleOutput;
+
+  public RainBotTests()
   {
     var fixture = new Fixture();
-    
-    var botMessage = fixture.Create<string>();
-    
-    var sut = new RainBot(botMessage, humidityThreshold);
 
-    using var consoleOutput = new StringWriter();
+    _botMessage = fixture.Create<string>();
     
-    Console.SetOut(consoleOutput);
+    _consoleOutput = new StringWriter();
+    
+    Console.SetOut(_consoleOutput);
+  }
+  
+  [Theory]
+  [InlineData(15.5, 1.6)]
+  [InlineData(17.5, null)]
+  public void Activate_LessThanThresholdOrNullHumidity_ShouldOutputNothingToTheConsole(double humidityThreshold, double? newHumidity)
+  {
+    var sut = new RainBot(_botMessage, humidityThreshold);
     
     sut.Activate(new WeatherData
     {
       Humidity = newHumidity
     });
     
-    var consoleOutputContent = consoleOutput.ToString();
+    var consoleOutputContent = _consoleOutput.ToString();
     
-    var expectedOutput = shouldOutputToConsole
-      ? $"""
-         RainBot Activated!
-         RainBot: {botMessage}
+    var expectedOutput = string.Empty;
+    
+    Assert.Equal(expectedOutput, consoleOutputContent);
+  }
+  
+  [Theory]
+  [InlineData(16.6, 20.0)]
+  public void Activate_GreaterThanThreshold_ShouldOutputBotActivationMessageToTheConsole(double humidityThreshold, double newHumidity)
+  {
+    var sut = new RainBot(_botMessage, humidityThreshold);
+    
+    sut.Activate(new WeatherData
+    {
+      Humidity = newHumidity
+    });
+    
+    var consoleOutputContent = _consoleOutput.ToString();
+    
+    var expectedOutput = $"""
+                          RainBot Activated!
+                          RainBot: {_botMessage}
 
-         """
-      : "";
+                          """;
     
     Assert.Equal(expectedOutput, consoleOutputContent);
   }
